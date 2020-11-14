@@ -59,7 +59,7 @@ $(document).ready(function(){
         case "10 AM": return 10;
         case "11 AM": return 11;
         case "12 AM": return 12;
-        case "13 PM": return 13;
+        case "1 PM": return 13;
         case "2 PM": return 14;
         case "3 PM": return 15;
         case "4 PM": return 16;
