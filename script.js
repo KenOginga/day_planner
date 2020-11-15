@@ -2,7 +2,7 @@
 
 $('#currentDay').text(moment().format('dddd') + ", " + moment().format('MMMM Do YYYY, h:mm:ss a'));
 
-let workHours = {
+var workHours = {
     "9 AM": "",
     "10 AM": "",
     "11 AM": "",
@@ -23,25 +23,41 @@ $(document).ready(function(){
     }
    
 })
-// forming variables to check if we have moved past the time.
-    let counter = 1;
-    for(const property in workHours) {
-            let textEntry = "#text-input" + counter;
-            $(textEntry).text(workHours[property]);
-            let timeId = "#time" + counter;
-            let currentHour = moment().hour();
-            let timeStr = $(timeId).text();
-            let timeNum = hourNumbers(timeStr);
 
-        // adding colors to the background as described in the css as we move past time.
-        if(timeNum < currentHour) {
-            $(textEntry).addClass("past");
-        } else if (timeNum > currentHour) {
+//this function uses the switch statement to evaluate the expression, matching its value to the case clause.
+function hourNumbers(time) {
+    switch(time) {
+    case "9 AM": return 9;
+    case "10 AM": return 10;
+    case "11 AM": return 11;
+    case "12 AM": return 12;
+    case "1 PM": return 13;
+    case "2 PM": return 14;
+    case "3 PM": return 15;
+    case "4 PM": return 16;
+    case "5 PM": return 17;
+    }
+}
+
+// forming variables to check if we have moved past the time.
+var count = 1;
+for(const property in workHours) {
+    var textEntry = "#text-input" + count;
+    $(textEntry).text(workHours[property]);
+    var timeId = "#time" + count;
+    var currentHour = moment().hour();
+    var timeStr = $(timeId).text();
+    var timeNum = hourNumbers(timeStr);
+
+// adding colors to the background as described in the css as we move past time.
+    if(timeNum < currentHour) {
+        $(textEntry).addClass("past");
+    } else if (timeNum > currentHour) {
             $(textEntry).addClass("future");
         } else {
             $(textEntry).addClass("present");
         }
-    counter ++;
+    count ++;
     }
 
 // adding click function to save the inputs in the local storage of the browser whenever the save button is clicked.
@@ -52,21 +68,7 @@ $(document).ready(function(){
         saveSchedule(time, value);
         
     })
-    //this function uses the switch statement to evaluate the expression, matching its value to the case clause.
-    function hourNumbers(time) {
-        switch(time) {
-        case "9 AM": return 9;
-        case "10 AM": return 10;
-        case "11 AM": return 11;
-        case "12 AM": return 12;
-        case "1 PM": return 13;
-        case "2 PM": return 14;
-        case "3 PM": return 15;
-        case "4 PM": return 16;
-        case "5 PM": return 17;
-        }
-    }
-
+  
     // this function loads the schedule in the correct data set such that each time matched their schedule input.
     function loadCorrectDataset() {
         result = localStorage.getItem("workHours")
